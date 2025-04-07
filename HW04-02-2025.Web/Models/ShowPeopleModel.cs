@@ -1,4 +1,6 @@
-﻿namespace HW04_02_2025.Web.Models
+﻿using HW04_02_2025.Data;
+
+namespace HW04_02_2025.Web.Models
 {
     public class ShowPeopleModel
     {

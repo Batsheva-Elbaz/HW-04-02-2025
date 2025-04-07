@@ -1,20 +1,26 @@
 ﻿$(() => {
+
+    let index = 1;
+
     $("#add-row").on('Click', function () {
-        var rows = $('#people-row .row person-row').length;
-        var newRow = `
-        <div class="row person-row">
-        <input class="form-control" type="text" name="people[${rows}].firstname" placeholder="First Name"/>
+        $('#people-row).append(AddARow())
+
+        index++;
+    });
+
+    function AddARow() {
+        return ` <div class="row person-row">
+         <div class="col-md-5">
+        <input class="form-control" type="text" name="people[${index}].firstname" placeholder="First Name"/>
         </div>
         
-         <div class="row person-row">
-        <input class="form-control" type="text" name="people[${rows}].lastname" placeholder="Last Name"/>
+         <div class="col-md-5">
+        <input class="form-control" type="text" name="people[${index}].lastname" placeholder="Last Name"/>
         </div>
 
-         <div class="row person-row">
-        <input class="form-control" type="text" name="people[${rows}].age" placeholder="Age"/>
+        <div class="col-md-5">
+        <input class="form-control" type="text" name="people[${index}].age" placeholder="Age"/>
         </div>
-        </div>
-        `;
-        $("#people-row").append(rows);
-    })
+    </div>`
+    }
 })

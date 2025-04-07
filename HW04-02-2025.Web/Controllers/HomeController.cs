@@ -6,20 +6,16 @@ using System.Diagnostics;
 namespace HW04_02_2025.Web.Controllers
 {
     public class HomeController : Controller
-    { 
-        private string _connectionString = @"Data Source=.\sqlexpress;Initial Catalog=People;Integrated Security=true;TrustServerCertificate=yes;";
-       
-        public IActionResult Index()
-        {
-            return View();
-        }
+    {
+        private static string _connectionString = @"Data Source=.\sqlexpress;Initial Catalog=People;Integrated Security=true;TrustServerCertificate=yes;";
+        Manager db = new(_connectionString);
 
-       public IActionResult ShowPeople()
+        public IActionResult Index()
         {
             var db = new Manager(_connectionString);
             var vm = new ShowPeopleModel
             {
-               person = db.GetAll()
+                person = db.GetAll()
             };
 
             if (TempData["message"] != null)
@@ -33,11 +29,17 @@ namespace HW04_02_2025.Web.Controllers
         public IActionResult DeleteMany(List<int> ids)
         {
             var db = new Manager(_connectionString);
-            db.DeleteMultiple(ids);
-            TempData["message"] = $"{ids.Count} people deleted successfully";
-            return Redirect("/home/ShowPeople");
+            if(ids.Count != 0)
+            {
+                db.DeleteMultiple(ids);
+                TempData["message"] = $"{ids.Count} people deleted successfully";
+
+            }
+            return Redirect("/");
         }
-        public IActionResult ShowFurnitureAdd()
+        
+
+        public IActionResult AddPerson()
         {
             return View();
         }
@@ -46,9 +48,9 @@ namespace HW04_02_2025.Web.Controllers
         public IActionResult AddPerson(List<Person> p)
         {
             var db = new Manager(_connectionString);
-            db.AddMultiple(p);
-            TempData["message"] = $"{p.Count} People added successfully";
-            return Redirect("/home/ShowPeople");
+            db.AddMultiple(p);  
+            TempData["message"] = $"{p.Count} People added successfully"; 
+            return Redirect("/");
         }
     }
 }

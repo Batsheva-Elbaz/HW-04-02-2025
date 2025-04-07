@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
+using System.Text;  
 using System.Threading.Tasks;
 
 namespace HW04_02_2025.Data
@@ -29,7 +29,7 @@ namespace HW04_02_2025.Data
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
-            cmd.CommandText = "Select * From People";
+            cmd.CommandText = "Select * From Person";
             connection.Open();
             var p = new List<Person>();
             var reader = cmd.ExecuteReader();
@@ -50,7 +50,7 @@ namespace HW04_02_2025.Data
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
-            cmd.CommandText = "INSERT INTO people " +
+            cmd.CommandText = "INSERT INTO people(FirstName, LastName, Age) " +
                 "Values(@first, @last,@age)";
             connection.Open();
             foreach(var person in p)
@@ -73,7 +73,7 @@ namespace HW04_02_2025.Data
                 parameters.Add($"@id{i}");
             }
 
-            string s = $"DELETE FROM people WHERE ID In({string.Join(",", parameters)})";
+            string s = $"DELETE FROM people WHERE Id In ({string.Join(",", parameters)})";
             using SqlCommand cmd = new SqlCommand(s, connection);
             for (int i = 0; i < id.Count; i++)
             {
