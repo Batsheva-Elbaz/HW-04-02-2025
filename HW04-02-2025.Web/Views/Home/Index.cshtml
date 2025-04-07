@@ -1,0 +1,42 @@
+﻿ @model ShowPeopleModel
+
+ @if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info " role="alert">
+        @Model.Message
+        <button type="button" class="btn close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+    </div>
+}
+
+<div class="col-md-10">
+    <a href="/home/addperson" class="btn btn-outline-info">Add People</a>
+    <form method="post" action="/home/deletemany">
+        <table class="table table-bordered">
+          
+            <thead>
+                <tr>
+                <th><button class="btn btn-warning">Delete All</button></th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                    <th>Age</th> 
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach(var person in Model.person)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="ids[]" value="@person.Id"/>
+                            
+                        </td> 
+                        <th>@person.FirstName</th>
+                        <th>@person.LastName</th>
+                        <th>@person.Age</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
